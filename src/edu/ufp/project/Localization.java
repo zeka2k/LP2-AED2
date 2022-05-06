@@ -11,15 +11,18 @@ public class Localization implements Serializable {
     //private String zona;
 
 
-    public Localization() {
-    }
-    public Localization(int x, int y, String node,TypeOfPoI typeOfPoI) {
+    public Localization(double x, double y, String node,TypeOfPoI typeOfPoI) {
         LocalizationManager localizationManager = Manager.getInstance().getLocationManager(node);    // Manager for the given node
         this.typeOfPoI = typeOfPoI;
         this.x = x;
         this.y = y;
         localizationManager.addLocation(this);          // add this location to the manager
     }
+    public Localization(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void setVertexId(int vertexId) {
         this.vertexId = vertexId;
     }

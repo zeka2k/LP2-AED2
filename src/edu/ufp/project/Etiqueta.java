@@ -7,12 +7,12 @@ public class Etiqueta {
     private String val;
     private String nome_rua;
     private String tipo_rua;
-    private ArrayList<PoI>poi_na_etiqueta=new ArrayList<>();
+    private ArrayList<PoI> poi_na_etiqueta = new ArrayList<>();
     private String volume_de_trafego;
     private int sensores;
 
 
-    //construtor para os nOdes
+    //construtor para os way
     public Etiqueta(String key, String val, String nome_rua, String tipo_rua, ArrayList<PoI> poi_na_etiqueta) {
         this.key = key;
         this.val = val;
@@ -20,7 +20,7 @@ public class Etiqueta {
         this.tipo_rua = tipo_rua;
         this.poi_na_etiqueta = poi_na_etiqueta;
     }
-    //construtor para as ways
+    //construtor para as node
     public Etiqueta(String key, String val, String volume_de_trafego, int sensores) {
         this.key = key;
         this.val = val;

@@ -14,5 +14,10 @@ import java.util.logging.Logger;
 public class City implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(City.class.getName());
 
+    private String name;
 
+
+    public City(String name) {
+        this.name = name;
+    }
 }
