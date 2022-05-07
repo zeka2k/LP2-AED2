@@ -12,11 +12,9 @@ public class Localization implements Serializable {
 
 
     public Localization(double x, double y, String node,TypeOfPoI typeOfPoI) {
-        LocalizationManager localizationManager = Manager.getInstance().getLocationManager(node);    // Manager for the given node
         this.typeOfPoI = typeOfPoI;
         this.x = x;
         this.y = y;
-        localizationManager.addLocation(this);          // add this location to the manager
     }
     public Localization(double x, double y) {
         this.x = x;
@@ -31,6 +29,13 @@ public class Localization implements Serializable {
     }
     public double getY() {
         return y;
+    }
+    @Override
+    public String toString() {
+        return "Localization{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 
     public TypeOfPoI getTypeOfPoI() {

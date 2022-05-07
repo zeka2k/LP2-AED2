@@ -1,26 +1,28 @@
 package edu.ufp.project;
 
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import edu.princeton.cs.algs4.RedBlackBST;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
 public class PoI implements Serializable {
     //private static final Logger LOGGER = Logger.getLogger(PoI.class.getName());
 
-    private int visitas;
+    private int id;
     private TypeOfPoI typeOfPoI;
     private Localization localization;
     private String info;
     private RedBlackBST<Date, User> users;
 
 
-    public int getVisitas() {
-        return visitas;
+    public int getId() {
+        return id;
     }
-    public void setVisitas(int visitas) {
-        this.visitas = visitas;
+    public void setId(int id) {
+        this.id = id;
     }
     public TypeOfPoI getTypeOfPoI() {
         return typeOfPoI;
@@ -40,11 +42,18 @@ public class PoI implements Serializable {
     public void setInfo(String info) {
         this.info = info;
     }
+    @Override
+    public String toString() {
+        return "PoI{" +
+                "Id = " + id +
+                "typeOfPoI = " + typeOfPoI +
+                ", localization = " + localization +
+                '}' + "\n";
+    }
 
 
-
-    public PoI(TypeOfPoI typeOfPoI, Localization localization, String info) {
-        this.visitas = 0;
+    public PoI(int Id, TypeOfPoI typeOfPoI, Localization localization, String info) {
+        this.id = Id;
         this.typeOfPoI = typeOfPoI;
         this.localization = localization;
         this.info = info;
@@ -52,12 +61,17 @@ public class PoI implements Serializable {
     }
     public void addUserPoi(User user, Date data) {
         this.users.put(data, user);
-        this.visitas++;
     }
     public void removeUserPoi(Date data) {
         if (this.users.contains(data)) {
             this.users.delete(data);
-            this.visitas--;
         }
+    }
+    public ArrayList<User> user_visitado_poi_tempo(Date d1, Date d2){
+        ArrayList<User> aUsers = new ArrayList<>();
+        for (Date key : this.users.keys(d1, d2)) {
+            aUsers.add(this.users.get(key));
+        }
+        return aUsers;
     }
 }
