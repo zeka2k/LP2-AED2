@@ -91,6 +91,7 @@ public class City implements Serializable {
     public void removerUser(User user) {
         if (this.users.containsValue(user)) {
             this.users.remove(user.getId(), user);
+            user.removeUser();
         }
     }
     /**
@@ -100,6 +101,7 @@ public class City implements Serializable {
     public void removePoI(PoI poi) {
         if (this.pois.containsValue(poi)) {
             this.pois.remove(poi.getId(), poi);
+            poi.removePoi();
         }
     }
 }

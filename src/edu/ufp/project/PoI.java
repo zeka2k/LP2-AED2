@@ -88,6 +88,14 @@ public class PoI implements Serializable {
         }
     }
     /**
+     * metodo para remover um poi
+     */
+    public void removePoi(){
+        for (Date key :this.users.keys()){
+            this.users.get(key).getPois().delete(key);
+        }
+    }
+    /**
      * Metodo que verifica quais os user que visitaram um dado poi num dado intervalo de tempo
      * @param d1 -> inicio do intervalo de tempo
      * @param d2 -> fim do intervalo de tempo

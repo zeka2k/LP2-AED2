@@ -138,13 +138,17 @@ public class Main extends Application {
         city.removePoI(p1);
         city.printPoiHash();*/
 
-        /*-->Requesito 6<--*/
+        /*-->Requesito 6<--
         p1.addUserPoi(u1, d1);
+        u1.addPoIUser(p1, d1);
         p1.addUserPoi(u2, d2);
+        u2.addPoIUser(p1, d2);
         p1.addUserPoi(u3, d3);
+        u3.addPoIUser(p1, d3);
         city.now();
-        u1.removeUser();
-        city.now();
+        city.removePoI(p2);
+        city.removerUser(u1);
+        city.now();*/
 
         /*-->Requesito 5 e/f<--
         Date d4= new Date(2000, 4, 1);
