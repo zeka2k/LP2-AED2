@@ -12,6 +12,7 @@ public class Date implements Comparable<Date>, Serializable {
     private int minute;
     private int second;
 
+
     public Date(int year, int month, int day){
         this.year = year;
         this.month = month;
@@ -28,7 +29,6 @@ public class Date implements Comparable<Date>, Serializable {
         this.minute = minute;
         this.second = second;
     }
-
     public Date(Date d){
         this.year = d.year;
         this.month = d.month;
@@ -37,7 +37,6 @@ public class Date implements Comparable<Date>, Serializable {
         this.minute = d.minute;
         this.second = d.second;
     }
-
     public Date(){
         GregorianCalendar g = new GregorianCalendar();
         this.year = g.get(Calendar.YEAR);
@@ -49,19 +48,58 @@ public class Date implements Comparable<Date>, Serializable {
     }
 
 
+    public int getDay() {
+        return day;
+    }
+    public void setDay(int day) {
+        this.day = day;
+    }
+    public int getMonth() {
+        return month;
+    }
+    public void setMonth(int month) {
+        this.month = month;
+    }
+    public int getYear() {
+        return year;
+    }
+    public void setYear(int year) {
+        this.year = year;
+    }
+    public int getHour() {
+        return hour;
+    }
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+    public int getMinute() {
+        return minute;
+    }
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+    public int getSecond() {
+        return second;
+    }
+    public void setSecond(int second) {
+        this.second = second;
+    }
+    @Override
+    public String toString() {
+        return this.year + "/" + this.month + "/" + this.day + " (" + this.hour + ":" + this.minute + ":" + this.second + ")";
+    }
+
+
     public boolean beforeDate(Date d) {
         return this.compareTo(d) < 0;
     }
-
     public static boolean isLeapYear(int year) {
         return ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
 
     }
-
     public boolean afterDate(Date d) {
         return this.compareTo(d) > 0;
     }
-
     public void incrementDate() {
         if(daysMonth((short) this.month, this.year) == this.day){
             if(this.month == 12){
@@ -79,7 +117,6 @@ public class Date implements Comparable<Date>, Serializable {
         //any other day
         this.day++;
     }
-
     @Override
     public int compareTo(Date d) {
 
@@ -111,7 +148,6 @@ public class Date implements Comparable<Date>, Serializable {
 
         return 1;
     }
-
     public static int daysMonth(short month, int year) {
         switch (month){
             case 11:
@@ -126,60 +162,6 @@ public class Date implements Comparable<Date>, Serializable {
         }
 
     }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public int getSecond() {
-        return second;
-    }
-
-    public void setSecond(int second) {
-        this.second = second;
-    }
-
-    @Override
-    public String toString() {
-        return this.year + "/" + this.month + "/" + this.day + " (" + this.hour + ":" + this.minute + ":" + this.second + ")";
-    }
-
     public static int daysBetweenDates(Date begin, Date end){
         if(begin.afterDate(end))
             return -1;
@@ -196,7 +178,6 @@ public class Date implements Comparable<Date>, Serializable {
         return days + Date.daysBetweenMonths(1, 1, end.day, end.month, end.year);
 
     }
-
     private static int daysBetweenMonths(int beginDay, int beginMonth, int endDay, int endMonth, int year) {
         if(beginMonth == endMonth)
             return endDay - beginDay;
@@ -207,8 +188,6 @@ public class Date implements Comparable<Date>, Serializable {
 
         return days + endDay;
     }
-
-
     private static int daysBetweenDatesRecursiveAux(Date begin, Date end){
         if(begin.beforeDate(end)){
             begin.incrementDate();
@@ -216,7 +195,6 @@ public class Date implements Comparable<Date>, Serializable {
         }
         return 0;
     }
-
     private static int daysBetweenDatesRecursive(Date begin, Date end){
         Date auxBegin = new Date(begin);
         int n_years=10;

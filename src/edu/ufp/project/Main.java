@@ -5,11 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javax.security.auth.Subject;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -22,17 +22,22 @@ public class Main extends Application {
     public static void main(String[] args) {
         //launch(args);
         testCity();
-
-
     }
 
 
+    /**
+     * função de teste para popular a cidade e fazer novos teste dentrp da cidade
+     */
     public static void testCity() {
+        //-->City
         City city = new City("Batatinha");
-        Etiqueta e1 = new Etiqueta("1", "1", "elevado", 1);//node
+        Date d1 = new Date(2000, 1, 1);
+        Date d2 = new Date(2000, 2, 1);
+        Date d3 = new Date(2000, 3, 1);
         ArrayList<PoI> pois = new ArrayList<>();
-        Etiqueta e2 = new Etiqueta("1", "1", "VCI", "Highway", pois);//way
-        Way w1 = new Way(e2.getKey(), e2.getVal(), "Controlado", 2, 1000, "sol");
+        Etiqueta e1 = new Etiqueta("1", "1", pois);//node
+        Etiqueta e2 = new Etiqueta("2", "1", "controlado", 2, "VCI", "Highway");//way
+        Way w1 = new Way(e2.getKey(), e2.getVal(), e2.getVolume_de_trafego(), e2.getSensores(), e2.getNome_rua(), e2.getTipo_rua(), 1000, "");
 
         //-->Poi's
         Localization l1 = new Localization(12123.1, -8.1233);
@@ -89,28 +94,103 @@ public class Main extends Application {
         city.addUserHash(u10);
 
 
-        ArrayList<PoI> pp1 = new ArrayList<>();
-        ArrayList<User> uu1 = new ArrayList<>();
-        Date d1 = new Date(2000, 1, 1);
-        Date d2 = new Date(2000, 2, 1);
-        Date d3 = new Date(2000, 3, 1);
+        /*-->Print city hashmap<--
+        city.printPoiHash();
+        city.printUserHash();*/
+
+
+        /*-->Requesito 3 funcao editar<--
+        p4.editPoi(TypeOfPoI.trafficLigth, null, null);
+        System.out.println(p4.toString());*/
+
+
+        ArrayList<PoI> pp1 ;
+        ArrayList<User> uu1;
+        /*-->Requesito 5a<--
         u1.addPoIUser(p1, d1);
         u1.addPoIUser(p2, d2);
         u1.addPoIUser(p3, d3);
         pp1 = u1.poi_visitado_user_tempo(d1, d3);
         for (PoI poi : pp1) {
             System.out.println(poi.toString());
-        }
+        }*/
 
+
+        //-->Requesito 5b<--
+        //System.out.println(u1.poi_nao_visitado_usertempo(city.getPois(), d1,d2).toString());
+
+
+        /*-->Requesito 5c<--
         p1.addUserPoi(u1, d1);
         p1.addUserPoi(u2, d2);
         p1.addUserPoi(u3, d3);
-        uu1 = p1.user_visitado_poi_tempo(d1, d2);
+        uu1 = p1.user_visitado_poi_tempo(d1, d3);
         for (User user : uu1) {
             System.out.println(user.toString());
-        }
+        }*/
 
-        city.printPoiHash();
+
+        /*-->Remove from hashmap<--
         city.printUserHash();
+        city.removerUser(u1);
+        city.printUserHash();
+        city.printPoiHash();
+        city.removePoI(p1);
+        city.printPoiHash();*/
+
+        /*-->Requesito 6<--*/
+        p1.addUserPoi(u1, d1);
+        p1.addUserPoi(u2, d2);
+        p1.addUserPoi(u3, d3);
+        city.now();
+        u1.removeUser();
+        city.now();
+
+        /*-->Requesito 5 e/f<--
+        Date d4= new Date(2000, 4, 1);
+        Date d5= new Date(2000, 5, 1);
+
+        u1.addPoIUser(p1, d1);
+        u1.addPoIUser(p2, d2);
+        u1.addPoIUser(p3, d3);
+
+        u2.addPoIUser(p1, d1);
+        u2.addPoIUser(p2, d2);
+
+        u3.addPoIUser(p1, d1);
+        u3.addPoIUser(p2, d2);
+        u3.addPoIUser(p3, d3);
+        u3.addPoIUser(p1,d4);
+
+        u4.addPoIUser(p4,d1);
+
+        u5.addPoIUser(p1, d1);
+        u5.addPoIUser(p2, d2);
+        u5.addPoIUser(p3, d3);
+        u5.addPoIUser(p4,d4);
+        u5.addPoIUser(p5,d5);
+
+        p1.addUserPoi(u1,d1);
+
+        p2.addUserPoi(u1,d1);
+        p2.addUserPoi(u2,d2);
+
+        p3.addUserPoi(u1,d1);
+        p3.addUserPoi(u2,d2);
+        p3.addUserPoi(u3,d3);
+
+        p4.addUserPoi(u1,d1);
+        p4.addUserPoi(u2,d2);
+        p4.addUserPoi(u3,d3);
+        p4.addUserPoi(u4,d4);
+
+        p5.addUserPoi(u1,d1);
+        p5.addUserPoi(u2,d2);
+        p5.addUserPoi(u3,d3);
+        p5.addUserPoi(u4,d4);
+        p5.addUserPoi(u5,d5);
+
+        System.out.println(u1.top_5_user(city.getUsers(),d1,d5).toString());
+        System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
     }
 }

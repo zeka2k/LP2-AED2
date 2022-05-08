@@ -12,20 +12,24 @@ public class Etiqueta {
     private int sensores;
 
 
-    //construtor para os way
-    public Etiqueta(String key, String val, String nome_rua, String tipo_rua, ArrayList<PoI> poi_na_etiqueta) {
+    /**
+     * construtor para um node
+     */
+    public Etiqueta(String key, String val, ArrayList<PoI> poi_na_etiqueta) {
         this.key = key;
         this.val = val;
-        this.nome_rua = nome_rua;
-        this.tipo_rua = tipo_rua;
         this.poi_na_etiqueta = poi_na_etiqueta;
     }
-    //construtor para as node
-    public Etiqueta(String key, String val, String volume_de_trafego, int sensores) {
+    /**
+     * construtor para uma way
+     */
+    public Etiqueta(String key, String val, String volume_de_trafego, int sensores, String nome_rua, String tipo_rua) {
         this.key = key;
         this.val = val;
         this.volume_de_trafego = volume_de_trafego;
         this.sensores = sensores;
+        this.nome_rua = nome_rua;
+        this.tipo_rua = tipo_rua;
     }
 
 
