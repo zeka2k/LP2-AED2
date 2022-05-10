@@ -194,7 +194,8 @@ public class Main extends Application {
         p5.addUserPoi(u4,d4);
         p5.addUserPoi(u5,d5);
 
-        System.out.println(u1.top_5_user(city.getUsers(),d1,d5).toString());
+        System.out.println(u1.top_5_user(city.getUsers(),d1,d5).toString() );
         System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
+
     }
 }
