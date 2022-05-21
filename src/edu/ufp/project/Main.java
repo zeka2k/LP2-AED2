@@ -35,9 +35,8 @@ public class Main extends Application {
         Date d2 = new Date(2000, 2, 1);
         Date d3 = new Date(2000, 3, 1);
         ArrayList<PoI> pois = new ArrayList<>();
-        Etiqueta e1 = new Etiqueta("1", "1", pois);//node
-        Etiqueta e2 = new Etiqueta("2", "1", "controlado", 2, "VCI", "Highway");//way
-        Way w1 = new Way(e2.getKey(), e2.getVal(), e2.getVolume_de_trafego(), e2.getSensores(), e2.getNome_rua(), e2.getTipo_rua(), 1000, "");
+
+
 
         //-->Poi's
         Localization l1 = new Localization(12123.1, -8.1233);

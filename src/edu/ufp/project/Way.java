@@ -2,42 +2,71 @@ package edu.ufp.project;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
-public class Way extends Etiqueta implements Serializable {
-    private double distancia;
-    private String tempo;
+public class Way  implements Serializable {
+   private long id;
+   private long node1;
+   private long node2;
+   private float peso;
+   private ArrayList<Etiqueta> etiquetas;
 
 
-    /**
-     * Construtor Way
-     * @param key ->key da way
-     * @param val -> val da way
-     * @param volume_de_trafego -> volume de trafego da way
-     * @param sensores -> sensores presentes na way
-     * @param nome_rua -> nome da way
-     * @param tipo_rua -> tipo de way
-     * @param distancia -> distancia da way
-     * @param tempo ->
-     */
-    public Way(String key, String val, String volume_de_trafego, int sensores, String nome_rua, String tipo_rua, double distancia, String tempo) {
-        super(key, val, volume_de_trafego, sensores, nome_rua, tipo_rua);
-        this.distancia = distancia;
-        this.tempo = tempo;
+    public Way(long id, long node1, long node2, float peso) {
+        this.id = id;
+        this.node1 = node1;
+        this.node2 = node2;
+        this.peso = peso;
+        this.etiquetas = new ArrayList<>();
     }
 
+    public long getId() {
+        return id;
+    }
 
-    public double getDistancia() {
-        return distancia;
+    public void setId(long id) {
+        this.id = id;
     }
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
+
+    public long getNode1() {
+        return node1;
     }
-    public String getTempo() {
-        return tempo;
+
+    public void setNode1(long node1) {
+        this.node1 = node1;
     }
-    public void setTempo(String tempo) {
-        this.tempo = tempo;
+
+    public long getNode2() {
+        return node2;
+    }
+
+    public void setNode2(long node2) {
+        this.node2 = node2;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+
+    public ArrayList<Etiqueta> getEtiquetas() {
+        return etiquetas;
+    }
+
+    public void setEtiquetas(ArrayList<Etiqueta> etiquetas) {
+        this.etiquetas = etiquetas;
+    }
+    public void insert_etiqueta(Etiqueta etiqueta){
+        this.etiquetas.add(etiqueta);
+    }
+    public void remove_etiqueta(Etiqueta etiqueta){
+        if(this.etiquetas.contains(etiqueta))
+            this.etiquetas.remove(etiqueta);
+        System.out.println("Nao existe");
     }
 }
