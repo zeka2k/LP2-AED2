@@ -35,4 +35,11 @@ public class Etiqueta {
         this.val = val;
     }
 
+    @Override
+    public String toString() {
+        return "Etiqueta{" +
+                "key='" + key + '\'' +
+                ", val='" + val + '\'' +
+                '}';
+    }
 }

@@ -5,21 +5,29 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Node  implements Serializable {
-    private long id;
+    private int id;
     private Localization localization;
     private ArrayList<Etiqueta> etiquetas;
+    private PoI poi;
 
-    public Node(long id, Localization localization) {
+    public Node(int id, Localization localization) {
         this.id = id;
         this.localization = localization;
         this.etiquetas = new ArrayList<>();
     }
 
-    public long getId() {
+    public Node(int  id, ArrayList<Etiqueta> etiquetas, PoI poi) {
+        this.id = id;
+        this.localization = poi.getLocalization();
+        this.etiquetas = etiquetas;
+        this.poi = poi;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,10 +49,29 @@ public class Node  implements Serializable {
     public void insert_etiqueta(Etiqueta etiqueta){
         this.etiquetas.add(etiqueta);
     }
+
+    public PoI getPoi() {
+        return poi;
+    }
+
+    public void setPoi(PoI poi) {
+        this.poi = poi;
+    }
+
     public void remove_etiqueta(Etiqueta etiqueta){
         if(this.etiquetas.contains(etiqueta))
             this.etiquetas.remove(etiqueta);
         System.out.println("Nao existe");
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                ", localization=" + localization +
+                ", etiquetas=" + etiquetas +
+                ", poi=" + poi +
+                '}';
     }
 }
 
