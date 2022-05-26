@@ -3,25 +3,27 @@ package edu.ufp.project;
 
 
 
+import edu.princeton.cs.algs4.DirectedEdge;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
-public class Way  implements Serializable {
+public class Way extends DirectedEdge implements Serializable {
    private int id;
-   private int node1;
-   private int  node2;
-   private double peso;
+   private Node node1;
+   private Node node2;
    private ArrayList<Etiqueta> etiquetas;
 
 
-    public Way(int  id, int  node1, int  node2, double peso) {
+    public Way( int id, Node node1,Node node2, double peso, ArrayList<Etiqueta> etiquetas) {
+        super(node1.getId(), node2.getId(), peso);
         this.id = id;
         this.node1 = node1;
         this.node2 = node2;
-        this.peso = peso;
-        this.etiquetas = new ArrayList<>();
+
+        this.etiquetas = etiquetas;
     }
 
     public int getId() {
@@ -32,28 +34,20 @@ public class Way  implements Serializable {
         this.id = id;
     }
 
-    public int getNode1() {
+    public Node getNode1() {
         return node1;
     }
 
-    public void setNode1(int node1) {
+    public void setNode1(Node node1) {
         this.node1 = node1;
     }
 
-    public int getNode2() {
+    public Node getNode2() {
         return node2;
     }
 
-    public void setNode2(int node2) {
+    public void setNode2(Node node2) {
         this.node2 = node2;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
     }
 
     public ArrayList<Etiqueta> getEtiquetas() {
@@ -78,7 +72,6 @@ public class Way  implements Serializable {
                 "id=" + id +
                 ", node1=" + node1 +
                 ", node2=" + node2 +
-                ", peso=" + peso +
                 ", etiquetas=" + etiquetas +
                 '}';
     }

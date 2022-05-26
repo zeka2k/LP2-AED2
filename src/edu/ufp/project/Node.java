@@ -14,6 +14,7 @@ public class Node  implements Serializable {
         this.id = id;
         this.localization = localization;
         this.etiquetas = new ArrayList<>();
+        this.poi=null;
     }
 
     public Node(int  id, ArrayList<Etiqueta> etiquetas, PoI poi) {

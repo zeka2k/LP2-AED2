@@ -1,5 +1,7 @@
 package edu.ufp.project;
 
+import edu.ufp.project.exceptions.GlobalGraphNotCreated;
+import edu.ufp.project.exceptions.LocationsNotInitException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,10 +18,11 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();*/
+
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
         //launch(args);
         testCity();
     }
@@ -28,7 +31,7 @@ public class Main extends Application {
     /**
      * função de teste para popular a cidade e fazer novos teste dentrp da cidade
      */
-    public static void testCity() {
+    public static void testCity() throws LocationsNotInitException, GlobalGraphNotCreated {
         //-->City
         City city = new City("Batatinha");
         Date d1 = new Date(2000, 1, 1);
@@ -196,5 +199,29 @@ public class Main extends Application {
         System.out.println(u1.top_5_user(city.getUsers(),d1,d5).toString() );
         System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
 
+        //milestone 2
+        Node n1 =new Node(1,null,p1);
+        Node n2=new Node (2,null,p2);
+        Node n3=new Node (3,null,p3);
+        Node n4 =new Node(4,null,p4);
+        Node n5 =new Node(0,null,p5);
+        Way w1 =new Way(1,n1,n2,10,null);
+        Way w2=new Way(2,n2,n3,15,null);
+        Way w3 =new Way(3,n3,n4,4,null);
+        Way w4 =new Way(4,n4,n5,2,null);
+        Way w5 =new Way(5,n5,n1,5,null);
+        NodeManager global=new NodeManager();
+        global.addNode(n1);
+        global.addNode(n2);
+        global.addNode(n3);
+        global.addNode(n4);
+        global.addNode(n5);
+        global.createGlobalGraph();
+        global.createEdge(w1);
+        //global.createEdge(w2);
+        global.createEdge(w3);
+        global.createEdge(w4);
+        global.createEdge(w5);
+        global.isConexo(global.getGlobalGraph());
     }
 }

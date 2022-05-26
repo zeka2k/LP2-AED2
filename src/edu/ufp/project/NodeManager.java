@@ -4,21 +4,31 @@ import edu.princeton.cs.algs4.*;
 import edu.ufp.project.exceptions.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.logging.Logger;
 
 public class NodeManager implements Serializable {
-    private static final Logger LOGGER = Logger.getLogger(Localization.class.getName());
-    private EdgeWeightedGraph globalGraph;       // global graph with all the sub-graphs
+    private EdgeWeightedDigraph globalGraph;       // global graph with all the sub-graphs
     private ArrayList<Node> nodes;
     private ArrayList<Way> ways;
+    private ArrayList<Subgraph> subgraphs;
+    private ArrayList<Node> indisponiveis;
     protected static Cost cost = Cost.DISTANCE;
 
     public NodeManager() {
         this.nodes = new ArrayList<>();
         this.ways = new ArrayList<>();
+        this.subgraphs=new ArrayList<>();
+        this.indisponiveis=new ArrayList<>();
     }
+public void addSubGraph(Subgraph subgraph){
+        if(this.subgraphs.contains(subgraph)){
+            System.out.println("subgraph already exists!");
+    return;
+}
+        this.subgraphs.add(subgraph);
+    System.out.println("subgraph successfully added ");
 
+}
     /**
      * Add a location to the ArrayList of locations and sets the VertexId
      *
@@ -26,17 +36,17 @@ public class NodeManager implements Serializable {
      */
     public void addNode(Node node) {
         if (this.nodes.contains(node)) {
-            LOGGER.warning("Node already exists!");
+            System.out.println("Node already exists!");
             return;
         }
 
         this.nodes.add(node);
-        LOGGER.info("Node successfully added to locations!");
+        System.out.println("Node successfully added ");
     }
 public void createGlobalGraph() throws LocationsNotInitException{
         if(this.nodes.isEmpty()) throw new LocationsNotInitException();
-        this.globalGraph=new EdgeWeightedGraph(this.nodes.size());
-    LOGGER.info("Global graph was created successfully with " + this.nodes.size() + " nodes!");
+        this.globalGraph=new EdgeWeightedDigraph(this.nodes.size());
+    System.out.println("Global graph was created successfully with " + this.nodes.size() + " nodes!");
 }
     public Localization getLocationWherenodeIs(int nodeId) throws VertexNotFoundException {
         for (Node node : this.nodes) if (node.getId() == nodeId) return node.getLocalization();
@@ -44,37 +54,36 @@ public void createGlobalGraph() throws LocationsNotInitException{
     }
    public void createEdge(Way way) throws GlobalGraphNotCreated{
         if(this.globalGraph !=null){
-            Edge e=new Edge(way.getNode1(), way.getNode2(), way.getPeso());
-            this.globalGraph.addEdge(e);
+            this.globalGraph.addEdge(way);
             this.ways.add(way);
 
-       LOGGER.info("An edge from " + way.getNode1() + " to " + way.getNode2()  + " weight  "+way.getPeso() +  "was added to graph");
+            System.out.println("An edge from " + way.getNode1() + " to " + way.getNode2()  + " weight  "+way.weight() +  "was added to graph");
    } else throw new GlobalGraphNotCreated();
    }
-    public boolean isConexo(EdgeWeightedGraph g) {
+    public boolean isConexo(EdgeWeightedDigraph g) {
         int s = 0;
         int flag = 0;
-        DijkstraUndirectedSP diskastra= new DijkstraUndirectedSP(g,s);
+        DijkstraSP sp = new DijkstraSP(g, s);
         for (int t = 0; t < g.V(); t++) {
-            if (!diskastra.hasPathTo(t)) {
-                LOGGER.info("Not connected in -> " + t);
+            if (!sp.hasPathTo(t)) {
+                System.out.println("Not connected in -> " + t);
                 flag = 1;
             }
         }
         if (flag == 0) {
-            LOGGER.info("The graph is connected!");
+            System.out.println("The graph is connected!");
             return true;
         }
-        LOGGER.info("The graph is not connected!");
+        System.out.println("The graph is not connected!");
         return false;
     }
-    public void shortestPathBetween(int source, int destination ,EdgeWeightedGraph g,Cost type) {
+    public void shortestPathBetween(int source, int destination ,EdgeWeightedDigraph g,Cost type) {
         cost = type;
-        DijkstraUndirectedSP dijkas = new DijkstraUndirectedSP(g,source);
-        LOGGER.info("printing dijkstra ...");
-        if (dijkas.hasPathTo(destination )) {
-            StdOut.printf("%d to %d (%.2f)  ", source, destination, dijkas.distTo(destination ));
-            for (Edge e : dijkas.pathTo(destination )) {
+        DijkstraSP dijkstraSP = new DijkstraSP(g, source );
+        System.out.println("printing dijkstra ...");
+        if (dijkstraSP.hasPathTo(destination )) {
+            StdOut.printf("%d to %d (%.2f)  ", source, destination, dijkstraSP.distTo(destination ));
+            for (DirectedEdge e : dijkstraSP.pathTo(destination )) {
                 StdOut.print((e.toString()));
             }
             StdOut.println();
@@ -104,5 +113,33 @@ public void createGlobalGraph() throws LocationsNotInitException{
         }
         return chosen;
     }
+    public void update_graph(Etiqueta e,Node n,Way w){
+        if(w==null){
+            n.getEtiquetas().add(e);
+        }
+        else if(n==null){
+            w.getEtiquetas().add(e);
+        }
+        else if(n==null && w==null){
+            System.out.println("nao adicionou nodes nem ways para modificar");
+        }
+        else {
+            w.getEtiquetas().add(e);
+            w.getNode1().getEtiquetas().add(e);
+            w.getNode2().getEtiquetas().add(e);
+        }
+    }
+    public void interrupcao(Node n){
+        Etiqueta e =new Etiqueta("obra","parado");
+        n.getEtiquetas().add(e);
+        this.indisponiveis.add(n);
+    }
 
+    public EdgeWeightedDigraph getGlobalGraph() {
+        return globalGraph;
+    }
+
+    public void setGlobalGraph(EdgeWeightedDigraph globalGraph) {
+        this.globalGraph = globalGraph;
+    }
 }

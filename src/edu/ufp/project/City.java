@@ -20,25 +20,11 @@ public class City implements Serializable {
 
     private HashMap<Integer ,PoI>pois;
     private HashMap<Integer,User>users;
-    private HashMap<Integer,Node>nodes;
-    private HashMap<Integer,Way> ways;
     private String nome;
 
-    public HashMap<Integer, Node> getNodes() {
-        return nodes;
-    }
 
-    public void setNodes(HashMap<Integer, Node> nodes) {
-        this.nodes = nodes;
-    }
 
-    public HashMap<Integer, Way> getWays() {
-        return ways;
-    }
 
-    public void setWays(HashMap<Integer, Way> ways) {
-        this.ways = ways;
-    }
 
     public HashMap<Integer, PoI> getPois() {
         return pois;
@@ -60,8 +46,6 @@ public class City implements Serializable {
     public City(String nome ) {
         this.pois = new HashMap<Integer ,PoI>();
         this.users = new HashMap<Integer,User>();
-        this.nodes =new HashMap<>();
-        this.ways =new HashMap<>();
         this.nome=nome;
     }
     /**
@@ -78,12 +62,8 @@ public class City implements Serializable {
     public void addUserHash(User user ){
         this.users.put(user.getId(),user);
     }
-    public void addNodesHash(Node node){
-        this.nodes.put(node.getId(),node);
-    }
-    public void addWayHash(Way way){
-        this.ways.put(way.getId(),way);
-    }
+
+
     /**
      * Metodo para imprimir o hasmap de pois
      */
@@ -95,12 +75,6 @@ public class City implements Serializable {
      */
     public void printUserHash() {
         System.out.println(this.users.toString());
-    }
-    public void printNodeHash(){
-        System.out.println(this.nodes.toString());
-    }
-    public void printwayHash(){
-        System.out.println(this.ways.toString());
     }
     /**
      * Metodo now gera um snapshot global do sistema
@@ -136,14 +110,5 @@ public class City implements Serializable {
             poi.removePoi();
         }
     }
-    public void removeNode(Node node){
-        if(this.nodes.containsValue(node)){
-            this.nodes.remove(node.getId(),node);
-        }
-    }
-public void removeWay(Way way){
-        if(this.ways.containsValue(way)){
-            this.ways.remove(way.getId(),way);
-        }
-}
+
 }
