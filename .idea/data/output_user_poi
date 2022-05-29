@@ -1,0 +1,51 @@
+Batatinha
+10
+1,electricChargingStation,12123.1,-8.1233,Cars
+2,fireHydrants,42242.23,-8.12343,
+3,trafficLigth,13443.1,-9.1233,
+4,electricChargingStation,12123.1,-1.1233,Cars
+5,electricChargingStation,12223.1,-2.1233,Cars
+6,electricChargingStation,12323.1,-3.1233,Cars
+7,electricChargingStation,12423.1,-4.1233,Cars
+8,electricChargingStation,12523.1,-5.1233,Cars
+9,electricChargingStation,12623.1,-6.1233,Cars
+10,electricChargingStation,17123.1,-7.1233,Cars
+10
+Admin,Jose Carlos,1
+Admin,Rodrigo Branco,2
+Basic,Pina Galinhas,3
+Basic,Batatinha Alfredo,4
+Premium,Papi Xulo,5
+Basic,Jose Carlos,6
+Basic,Rodrigo Branco,7
+Basic,Pina Galinhas,8
+Basic,Batatinha Alfredo,9
+Premium,Papi Xulo,10
+3
+1,1,2000,1,1,0,0,0
+1,2,2000,2,1,0,0,0
+1,3,2000,3,1,0,0,0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+3
+1,1,2000,1,1,0,0,0
+1,2,2000,2,1,0,0,0
+1,3,2000,3,1,0,0,0
+1
+2,1,2000,2,1,0,0,0
+1
+3,1,2000,3,1,0,0,0
+0
+0
+0
+0
+0
+0
+0

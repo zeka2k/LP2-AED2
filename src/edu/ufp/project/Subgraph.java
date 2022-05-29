@@ -16,31 +16,60 @@ public class Subgraph {
     private ArrayList<Node> nodes;
     private ArrayList<Way> ways;
     protected static Cost cost = Cost.DISTANCE;
-  public Subgraph(){
-      this.nodes=new ArrayList<>();
-      this.ways=new ArrayList<>();
-  }
+
+
+    public EdgeWeightedDigraph getGraph() {
+        return graph;
+    }
+    public void setGraph(EdgeWeightedDigraph graph) {
+        this.graph = graph;
+    }
+
+
+    /**
+     * Contrutor subgraph
+     */
+    public Subgraph() {
+        this.nodes = new ArrayList<>();
+        this.ways = new ArrayList<>();
+    }
+
+    /**
+     * Metodo para adicionar um node ao subgraph
+     * @param node -> node a adicionar
+     */
     public void addNode(Node node) {
         if (this.nodes.contains(node)) {
-            LOGGER.warning("Node already exists!");
+            System.out.println("Node already exists!");
             return;
         }
 
         this.nodes.add(node);
-        LOGGER.info("Node successfully added to locations!");
+        System.out.println("Node successfully added to subgraph!");
     }
+
+    /**
+     * Metodo para criar um subgraph
+     * @throws LocationsNotInitException -> excecao lancada em caso de nao existirem nodes
+     */
     public void createsubGraph() throws LocationsNotInitException {
-        if(this.nodes.isEmpty()) throw new LocationsNotInitException();
-        this.graph=new EdgeWeightedDigraph(this.nodes.size());
-        LOGGER.info("Global graph was created successfully with " + this.nodes.size() + " nodes!");
+        if (this.nodes.isEmpty()) throw new LocationsNotInitException();
+        this.graph = new EdgeWeightedDigraph(this.nodes.size());
+        System.out.println("SubGraph was created successfully with " + this.nodes.size() + " nodes!");
     }
+
+    /**
+     * Metodo para criar uma edge
+     * @param way -> edge a ser criada
+     * @throws GlobalGraphNotCreated -> excecao lancada em caso de nao existir um graph principal, neste caso um subgraph
+     */
     public void createEdge(Way way) throws GlobalGraphNotCreated {
-        if(this.graph !=null){
+        if (this.graph != null) {
 
             this.graph.addEdge(way);
             this.ways.add(way);
 
-            LOGGER.info("An edge from " + way.getNode1() + " to " + way.getNode2()  + " weight  "+way.weight() +  "was added to graph");
+            System.out.println("An edge from " + way.getNode1() + " to " + way.getNode2() + " weight  " + way.weight() + "was added to graph");
         } else throw new GlobalGraphNotCreated();
     }
 }

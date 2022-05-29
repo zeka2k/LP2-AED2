@@ -25,6 +25,7 @@ public class Main extends Application {
     public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
         //launch(args);
         testCity();
+        //test2();
     }
 
 
@@ -96,43 +97,12 @@ public class Main extends Application {
         city.addUserHash(u10);
 
 
-        /*-->Print city hashmap<--
+        /*-------------------->Print city hashmap<--------------------
         city.printPoiHash();
         city.printUserHash();*/
 
 
-        /*-->Requesito 3 funcao editar<--
-        p4.editPoi(TypeOfPoI.trafficLigth, null, null);
-        System.out.println(p4.toString());*/
-
-
-        ArrayList<PoI> pp1 ;
-        ArrayList<User> uu1;
-        /*-->Requesito 5a<--
-        u1.addPoIUser(p1, d1);
-        u1.addPoIUser(p2, d2);
-        u1.addPoIUser(p3, d3);
-        pp1 = u1.poi_visitado_user_tempo(d1, d3);
-        for (PoI poi : pp1) {
-            System.out.println(poi.toString());
-        }*/
-
-
-        //-->Requesito 5b<--
-        //System.out.println(u1.poi_nao_visitado_usertempo(city.getPois(), d1,d2).toString());
-
-
-        /*-->Requesito 5c<--
-        p1.addUserPoi(u1, d1);
-        p1.addUserPoi(u2, d2);
-        p1.addUserPoi(u3, d3);
-        uu1 = p1.user_visitado_poi_tempo(d1, d3);
-        for (User user : uu1) {
-            System.out.println(user.toString());
-        }*/
-
-
-        /*-->Remove from hashmap<--
+        /*-------------------->Remove from hashmap<--------------------
         city.printUserHash();
         city.removerUser(u1);
         city.printUserHash();
@@ -140,19 +110,38 @@ public class Main extends Application {
         city.removePoI(p1);
         city.printPoiHash();*/
 
-        /*-->Requesito 6<--
-        p1.addUserPoi(u1, d1);
-        u1.addPoIUser(p1, d1);
-        p1.addUserPoi(u2, d2);
-        u2.addPoIUser(p1, d2);
-        p1.addUserPoi(u3, d3);
-        u3.addPoIUser(p1, d3);
-        city.now();
-        city.removePoI(p2);
-        city.removerUser(u1);
-        city.now();*/
 
-        /*-->Requesito 5 e/f<--
+        /*-------------------->Requesito 3 funcao editar<--------------------
+        p4.editPoi(TypeOfPoI.trafficLigth, null, null);
+        System.out.println(p4.toString());*/
+
+
+        /*-------------------->Requesito 5<--------------------*/
+        ArrayList<PoI> pp1 ;
+        ArrayList<User> uu1;
+
+        /*-------------------->Requesito 5.a<--------------------*/
+        u1.addPoIUser(p1, d1);
+        u1.addPoIUser(p2, d2);
+        u1.addPoIUser(p3, d3);
+        /*pp1 = u1.poi_visitado_user_tempo(d1, d3);
+        for (PoI poi : pp1) {
+            System.out.println(poi.toString());
+        }*/
+
+        //-------------------->Requesito 5.b/d<--------------------
+        //System.out.println(u1.poi_nao_visitado_usertempo(city.getPois(), d1,d2).toString());
+
+        /*-------------------->Requesito 5.c<--------------------*/
+        p1.addUserPoi(u1, d1);
+        p1.addUserPoi(u2, d2);
+        p1.addUserPoi(u3, d3);
+        /*uu1 = p1.user_visitado_poi_tempo(d1, d3);
+        for (User user : uu1) {
+            System.out.println(user.toString());
+        }*/
+
+        /*-------------------->Requesito 5.e/f<--------------------
         Date d4= new Date(2000, 4, 1);
         Date d5= new Date(2000, 5, 1);
 
@@ -199,18 +188,44 @@ public class Main extends Application {
         System.out.println(u1.top_5_user(city.getUsers(),d1,d5).toString() );
         System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
 
-        //milestone 2
+
+        /*-------------------->Requesito 4/6<--------------------*/
+        p1.addUserPoi(u1, d1);
+        u1.addPoIUser(p1, d1);
+        p1.addUserPoi(u2, d2);
+        u2.addPoIUser(p1, d2);
+        p1.addUserPoi(u3, d3);
+        u3.addPoIUser(p1, d3);
+        /*city.now();
+        city.removePoI(p2);
+        city.removerUser(u1);
+        city.now();*/
+
+
+        /*-------------------->Milestone 2<--------------------*/
+        Etiqueta eti = new Etiqueta("oi","max");
+        Etiqueta eti2 = new Etiqueta("oi","min");
+        ArrayList<Etiqueta> etis = new ArrayList<>();
+        etis.add(eti);
+        etis.add(eti2);
+
         Node n1 =new Node(1,null,p1);
-        Node n2=new Node (2,null,p2);
+        Node n2=new Node (2,etis,p2);
         Node n3=new Node (3,null,p3);
         Node n4 =new Node(4,null,p4);
         Node n5 =new Node(0,null,p5);
+
         Way w1 =new Way(1,n1,n2,10,null);
         Way w2=new Way(2,n2,n3,15,null);
         Way w3 =new Way(3,n3,n4,4,null);
         Way w4 =new Way(4,n4,n5,2,null);
-        Way w5 =new Way(5,n5,n1,5,null);
+        Way w5 =new Way(0,n5,n1,5,null);
+        Way w6 =new Way(5,n2,n4,5,null);
+
         NodeManager global=new NodeManager();
+
+
+        /*-------------------->Requesito 11<--------------------*/
         global.addNode(n1);
         global.addNode(n2);
         global.addNode(n3);
@@ -218,10 +233,87 @@ public class Main extends Application {
         global.addNode(n5);
         global.createGlobalGraph();
         global.createEdge(w1);
-        //global.createEdge(w2);
+        global.createEdge(w2);
         global.createEdge(w3);
         global.createEdge(w4);
         global.createEdge(w5);
-        global.isConexo(global.getGlobalGraph());
+        global.createEdge(w6);
+
+        /*-------------------->11.a<--------------------
+        global.shortestPathBetween(n1, n4, global.getGlobalGraph(), Cost.DISTANCE);*/
+
+        /*-------------------->11.b<--------------------
+        Subgraph subgraph = new Subgraph();
+        subgraph.addNode(n1);
+        subgraph.addNode(n2);
+        subgraph.addNode(n3);
+        subgraph.addNode(n4);
+        subgraph.addNode(n5);
+        subgraph.createsubGraph();
+        global.addSubGraph(subgraph);
+        subgraph.createEdge(w1);
+        subgraph.createEdge(w2);
+        subgraph.createEdge(w3);
+        subgraph.createEdge(w4);
+        subgraph.createEdge(w5);
+
+        global.shortestPathBetween(n1, n4, subgraph.getGraph(), Cost.DISTANCE); */
+
+        /*-------------------->11.c<--------------------
+        global.isConexo(global.getGlobalGraph());*/
+
+
+        /*-------------------->Requesito 13/14<--------------------*/
+        city.writetxtusers_poi();
+        global.writetxtnode();
+        global.writewaytxt();
+
+
+        /*-------------------->Requesito 15<--------------------*/
+        /*-------------------->15.a<--------------------
+        Etiqueta e1 =  new Etiqueta("Electric Charging Station", "Cars");
+        Etiqueta e2 =  new Etiqueta("Electric Charging Station", "motorcycles");
+        Etiqueta e3 =  new Etiqueta("Electric Charging Station", "bicycles");
+        n1.insert_etiqueta(e1);
+        n2.insert_etiqueta(e2);
+        n3.insert_etiqueta(e3);
+
+        System.out.println("\n");
+        System.out.println(global.listar_vertices_etiqeta_poi(TypeOfPoI.fireHydrants).toString());
+        System.out.println(global.listar_vertices_etiqeta_poi(TypeOfPoI.trafficLigth).toString());
+        System.out.println(global.listar_vertices_etiqeta_poi2(e1));*/
+
+        /*-------------------->15.b<--------------------
+        Localization l = new Localization(12323, -3);
+        System.out.println("\n");
+        System.out.println(global.getNearestLocation(l, TypeOfPoI.electricChargingStation));*/
+
+
+        /*-------------------->Requesito 16<--------------------
+        Etiqueta e1 = new Etiqueta("Volume de Transito", "Elevado");
+        global.update_graph(e1, n1, w1);
+        System.out.println("Way" + w1.getId() + w1.getEtiquetas().toString());
+        System.out.println("Node" + w1.getNode1().getId() + w1.getNode1().getEtiquetas().toString());
+        System.out.println("Node" + w1.getNode2().getId() + w1.getNode2().getEtiquetas().toString());
+
+        global.update_graph(e1, null, w3);
+        System.out.println("Way" + w3.getId() + w3.getEtiquetas().toString());
+        System.out.println("Node" + w3.getNode1().getId() + w3.getNode1().getEtiquetas().toString());
+        System.out.println("Node" + w3.getNode2().getId() + w3.getNode2().getEtiquetas().toString());
+
+        global.update_graph(e1, n4, null);
+        System.out.println("Node" + n4.getId() + n4.getEtiquetas().toString());*/
+    }
+
+    /**
+     * Metodo para ler info dos ficheiros txt
+     */
+    public static void test2(){
+        City c =new City("aaa");
+        c.readtxtuser_poi(".idea/data/output_user_poi");
+        c.now();
+        NodeManager nodeManager=new NodeManager();
+        nodeManager.readtxtnode(".idea/data/output_node_txt",c);
+        System.out.println(nodeManager.getNodes().toString());
     }
 }

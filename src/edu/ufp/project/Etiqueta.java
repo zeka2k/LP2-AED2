@@ -7,21 +7,6 @@ public class Etiqueta {
     private String val;
 
 
-
-    /**
-     * construtor para um node
-     */
-    public Etiqueta(String key, String val) {
-        this.key = key;
-        this.val = val;
-
-    }
-    /**
-     * construtor para uma way
-     */
-
-
-
     public String getKey() {
         return key;
     }
@@ -34,12 +19,21 @@ public class Etiqueta {
     public void setVal(String val) {
         this.val = val;
     }
-
     @Override
     public String toString() {
         return "Etiqueta{" +
                 "key='" + key + '\'' +
                 ", val='" + val + '\'' +
                 '}';
+    }
+
+
+    /**
+     * construtor para um node
+     */
+    public Etiqueta(String key, String val) {
+        this.key = key;
+        this.val = val;
+
     }
 }
