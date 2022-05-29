@@ -20,7 +20,40 @@ public class NodeManager implements Serializable {
         this.subgraphs=new ArrayList<>();
         this.indisponiveis=new ArrayList<>();
     }
-public void addSubGraph(Subgraph subgraph){
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public ArrayList<Way> getWays() {
+        return ways;
+    }
+
+    public void setWays(ArrayList<Way> ways) {
+        this.ways = ways;
+    }
+
+    public ArrayList<Subgraph> getSubgraphs() {
+        return subgraphs;
+    }
+
+    public void setSubgraphs(ArrayList<Subgraph> subgraphs) {
+        this.subgraphs = subgraphs;
+    }
+
+    public ArrayList<Node> getIndisponiveis() {
+        return indisponiveis;
+    }
+
+    public void setIndisponiveis(ArrayList<Node> indisponiveis) {
+        this.indisponiveis = indisponiveis;
+    }
+
+    public void addSubGraph(Subgraph subgraph){
         if(this.subgraphs.contains(subgraph)){
             System.out.println("subgraph already exists!");
     return;
@@ -77,18 +110,18 @@ public void createGlobalGraph() throws LocationsNotInitException{
         System.out.println("The graph is not connected!");
         return false;
     }
-    public void shortestPathBetween(int source, int destination ,EdgeWeightedDigraph g,Cost type) {
+    public void shortestPathBetween(Node source, Node destination ,EdgeWeightedDigraph g,Cost type) {
         cost = type;
-        DijkstraSP dijkstraSP = new DijkstraSP(g, source );
+        DijkstraSP dijkstraSP = new DijkstraSP(g, source.getId() );
         System.out.println("printing dijkstra ...");
-        if (dijkstraSP.hasPathTo(destination )) {
-            StdOut.printf("%d to %d (%.2f)  ", source, destination, dijkstraSP.distTo(destination ));
-            for (DirectedEdge e : dijkstraSP.pathTo(destination )) {
+        if (dijkstraSP.hasPathTo(destination.getId() )) {
+            StdOut.printf("%d to %d (%.2f)  ", source.getId(), destination.getId(), dijkstraSP.distTo(destination.getId() ));
+            for (DirectedEdge e : dijkstraSP.pathTo(destination.getId() )) {
                 StdOut.print((e.toString()));
             }
             StdOut.println();
         } else {
-            StdOut.printf("%d to %d         no path\n", source , destination );
+            StdOut.printf("%d to %d         no path\n", source.getId() , destination.getId() );
         }
     }
     public ArrayList<Node> listar_vertices_etiqeta_poi(TypeOfPoI tipo_poi){
@@ -134,7 +167,58 @@ public void createGlobalGraph() throws LocationsNotInitException{
         n.getEtiquetas().add(e);
         this.indisponiveis.add(n);
     }
+public void writetxtnode(){
+        Out out=new Out(".idea/data/output_node_txt");
+        out.println(this.nodes.size());
+        for (Node nodes :this.nodes){
+            if(nodes.getEtiquetas()==null){
+                out.println(nodes.getId()+","+nodes.getPoi().getId()+","+0);
+            }
+            else{
+            out.println(nodes.getId()+","+nodes.getPoi().getId()+","+nodes.getEtiquetas().size());
+            for (Etiqueta etiqueta:nodes.getEtiquetas()){
+                out.print(etiqueta.getKey()+","+etiqueta.getVal()+",");
+            }
+            out.println();}
+        }
+}
+public void readtxtnode(String file,City c){
+    String linha;
+    In in=new In(file);
+    if (!in.exists()) {
+        System.out.println("Failed to read file");
+    } else {
+        while(in.hasNextLine()){
+            linha=in.readLine();
+            int nodeCount=Integer.parseInt(linha);
+            for (int i=0;i<nodeCount;i++){
+                linha=in.readLine();
+                String node[]=linha.split(",",3);
+                int eticount,nodeid,poiid;
+                nodeid=Integer.parseInt(node[0]);
+                poiid=Integer.parseInt(node[1]);
+                eticount=Integer.parseInt(node[2]);
+                if(eticount==0){
+                    Node newnode =new Node(nodeid,null,c.getPois().get(poiid));
+                    this.addNode(newnode);
+                }else{
+                    String key;
+                    String value;
+                    linha=in.readLine();
+                    String eti[]=linha.split(",",eticount);
+                    ArrayList<Etiqueta> etis=new ArrayList<>();
+                    for (int j=0;j<eticount;j=j+2){
+                        key=eti[j];
+                        value=eti[j+1];
+                        Etiqueta et=new Etiqueta(key,value);
+                        etis.add(et);
+                    }
+                    Node newnode =new Node(nodeid,etis,c.getPois().get(poiid));
+                    this.addNode(newnode);
 
+            }}
+        }
+}}
     public EdgeWeightedDigraph getGlobalGraph() {
         return globalGraph;
     }
@@ -142,4 +226,5 @@ public void createGlobalGraph() throws LocationsNotInitException{
     public void setGlobalGraph(EdgeWeightedDigraph globalGraph) {
         this.globalGraph = globalGraph;
     }
+
 }

@@ -24,7 +24,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
         //launch(args);
-        testCity();
+        //testCity();
+         test2();
     }
 
 
@@ -95,7 +96,6 @@ public class Main extends Application {
         User u10 = new User(TypeOfUser.Premium, "Papi Xulo", 10);
         city.addUserHash(u10);
 
-
         /*-->Print city hashmap<--
         city.printPoiHash();
         city.printUserHash();*/
@@ -108,10 +108,10 @@ public class Main extends Application {
 
         ArrayList<PoI> pp1 ;
         ArrayList<User> uu1;
-        /*-->Requesito 5a<--
+        //-->Requesito 5a<--
         u1.addPoIUser(p1, d1);
         u1.addPoIUser(p2, d2);
-        u1.addPoIUser(p3, d3);
+        u1.addPoIUser(p3, d3);/*
         pp1 = u1.poi_visitado_user_tempo(d1, d3);
         for (PoI poi : pp1) {
             System.out.println(poi.toString());
@@ -122,10 +122,12 @@ public class Main extends Application {
         //System.out.println(u1.poi_nao_visitado_usertempo(city.getPois(), d1,d2).toString());
 
 
-        /*-->Requesito 5c<--
+        //-->Requesito 5c<--
         p1.addUserPoi(u1, d1);
         p1.addUserPoi(u2, d2);
         p1.addUserPoi(u3, d3);
+        //city.writetxtusers_poi();
+/*
         uu1 = p1.user_visitado_poi_tempo(d1, d3);
         for (User user : uu1) {
             System.out.println(user.toString());
@@ -200,8 +202,13 @@ public class Main extends Application {
         System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
 
         //milestone 2
+        Etiqueta eti=new Etiqueta("oi","vaca");
+        Etiqueta eti2=new Etiqueta("oi","porca");
+ArrayList<Etiqueta> etis=new ArrayList<>();
+etis.add(eti);
+etis.add(eti2);
         Node n1 =new Node(1,null,p1);
-        Node n2=new Node (2,null,p2);
+        Node n2=new Node (2,etis,p2);
         Node n3=new Node (3,null,p3);
         Node n4 =new Node(4,null,p4);
         Node n5 =new Node(0,null,p5);
@@ -218,10 +225,19 @@ public class Main extends Application {
         global.addNode(n5);
         global.createGlobalGraph();
         global.createEdge(w1);
-        //global.createEdge(w2);
+        global.createEdge(w2);
         global.createEdge(w3);
         global.createEdge(w4);
         global.createEdge(w5);
+        global.writetxtnode();/*
         global.isConexo(global.getGlobalGraph());
+        global.shortestPathBetween(n1,n2,global.getGlobalGraph(),Cost.TIME);*/
+    }
+    public static void test2(){
+City c =new City("aaa");
+      c.readtxtuser_poi(".idea/data/output_user_poi");
+      NodeManager nodeManager=new NodeManager();
+      nodeManager.readtxtnode(".idea/data/output_node_txt",c);
+        System.out.println(nodeManager.getNodes().toString());
     }
 }

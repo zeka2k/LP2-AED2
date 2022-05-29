@@ -51,7 +51,7 @@ public class PoI implements Serializable {
         return "PoI{" +
                 "Id = " + id +
                 "typeOfPoI = " + typeOfPoI +
-                ", localization = " + localization +
+                ", localization = " + localization + ",info ="+info+
                 '}' + "\n";
     }
 
