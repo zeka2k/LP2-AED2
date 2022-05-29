@@ -24,8 +24,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
         //launch(args);
-        testCity();
-        //test2();
+        //testCity();
+        test2();
     }
 
 
@@ -308,12 +308,13 @@ public class Main extends Application {
     /**
      * Metodo para ler info dos ficheiros txt
      */
-    public static void test2(){
+    public static void test2() throws GlobalGraphNotCreated, LocationsNotInitException{
         City c =new City("aaa");
         c.readtxtuser_poi(".idea/data/output_user_poi");
-        c.now();
         NodeManager nodeManager=new NodeManager();
         nodeManager.readtxtnode(".idea/data/output_node_txt",c);
         System.out.println(nodeManager.getNodes().toString());
+        nodeManager.readtxtway(".idea/data/output_way_txt");
+        System.out.println(nodeManager.getWays().toString());
     }
 }
