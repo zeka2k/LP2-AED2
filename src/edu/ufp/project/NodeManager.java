@@ -219,6 +219,65 @@ public void readtxtnode(String file,City c){
             }}
         }
 }}
+public void writewaytxt(){
+    Out out=new Out(".idea/data/output_way_txt");
+    out.println(this.ways.size());
+    for (Way ways:this.ways){
+        if(ways.getEtiquetas()==null){
+            out.println(ways.getId()+","+this.nodes.indexOf(ways.getNode1())+","+this.nodes.indexOf(ways.getNode2())+","+ways.weight()+","+0);
+        }
+        else{
+            out.println(ways.getId()+","+ways.getNode1().getId()+","+ways.getNode2().getId()+","+ways.weight()+","+ways.getEtiquetas().size());
+                for (Etiqueta eti:ways.getEtiquetas()){
+                    out.print(eti.getKey()+","+eti.getVal()+",");
+                }
+            out.println();
+            }
+
+    }
+}
+public void readtxtway(String file) throws LocationsNotInitException, GlobalGraphNotCreated {
+        this.createGlobalGraph();
+    String linha;
+    In in=new In(file);
+    if (!in.exists()) {
+        System.out.println("Failed to read file");
+    } else {
+        while(in.hasNextLine()){
+            linha=in.readLine();
+            int wayCount=Integer.parseInt(linha);
+            for (int i=0;i<wayCount;i++){
+                linha=in.readLine();
+                String way[]=linha.split(",",5);
+                int wayid,nodeind1,nodeind2,eticount;
+                double peso;
+                wayid=Integer.parseInt(way[0]);
+                nodeind1=Integer.parseInt(way[1]);
+                nodeind2=Integer.parseInt(way[2]);
+                peso=Double.parseDouble(way[3]);
+                eticount=Integer.parseInt(way[4]);
+                if(eticount==0){
+                    Way newway=new Way(wayid,this.nodes.get(nodeind1),this.nodes.get(nodeind2),peso,null);
+                    this.createEdge(newway);
+                }
+                else {
+                    String key;
+                    String value;
+                    linha=in.readLine();
+                    String eti[]=linha.split(",",eticount);
+                    ArrayList<Etiqueta> etis=new ArrayList<>();
+                    for (int j=0;j<eticount;j=j+2){
+                        key=eti[j];
+                        value=eti[j+1];
+                        Etiqueta et=new Etiqueta(key,value);
+                        etis.add(et);
+                    }
+                    Way newway=new Way(wayid,this.nodes.get(nodeind1),this.nodes.get(nodeind2),peso,etis);
+                    this.createEdge(newway);
+                }
+            }
+        }
+}}
     public EdgeWeightedDigraph getGlobalGraph() {
         return globalGraph;
     }

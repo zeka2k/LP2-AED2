@@ -202,8 +202,8 @@ public class Main extends Application {
         System.out.println(p1.top_5_poi(city.getPois(),d1,d5).toString());*/
 
         //milestone 2
-        Etiqueta eti=new Etiqueta("oi","vaca");
-        Etiqueta eti2=new Etiqueta("oi","porca");
+        Etiqueta eti=new Etiqueta("oi","mem");
+        Etiqueta eti2=new Etiqueta("oi","mim");
 ArrayList<Etiqueta> etis=new ArrayList<>();
 etis.add(eti);
 etis.add(eti2);
@@ -229,15 +229,18 @@ etis.add(eti2);
         global.createEdge(w3);
         global.createEdge(w4);
         global.createEdge(w5);
-        global.writetxtnode();/*
+        global.writetxtnode();
+        global.writewaytxt();/*
         global.isConexo(global.getGlobalGraph());
         global.shortestPathBetween(n1,n2,global.getGlobalGraph(),Cost.TIME);*/
     }
-    public static void test2(){
+    public static void test2() throws GlobalGraphNotCreated, LocationsNotInitException {
 City c =new City("aaa");
       c.readtxtuser_poi(".idea/data/output_user_poi");
       NodeManager nodeManager=new NodeManager();
       nodeManager.readtxtnode(".idea/data/output_node_txt",c);
         System.out.println(nodeManager.getNodes().toString());
+        nodeManager.readtxtway(".idea/data/output_way_txt");
+        System.out.println(nodeManager.getWays().toString());
     }
 }
