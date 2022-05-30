@@ -25,9 +25,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
         launch(args);
-        //launch(args);
         //testCity();
-        //test2();
+        test2();
     }
 
 
@@ -244,7 +243,7 @@ public class Main extends Application {
         /*-------------------->11.a<--------------------
         global.shortestPathBetween(n1, n4, global.getGlobalGraph(), Cost.DISTANCE);*/
 
-        /*-------------------->11.b<--------------------
+        /*-------------------->11.b<--------------------*/
         Subgraph subgraph = new Subgraph();
         subgraph.addNode(n1);
         subgraph.addNode(n2);
@@ -259,7 +258,7 @@ public class Main extends Application {
         subgraph.createEdge(w4);
         subgraph.createEdge(w5);
 
-        global.shortestPathBetween(n1, n4, subgraph.getGraph(), Cost.DISTANCE); */
+        //global.shortestPathBetween(n1, n4, subgraph.getGraph(), Cost.DISTANCE);
 
         /*-------------------->11.c<--------------------
         global.isConexo(global.getGlobalGraph());*/
@@ -269,6 +268,8 @@ public class Main extends Application {
         city.writetxtusers_poi();
         global.writetxtnode();
         global.writewaytxt();
+        global.writesubtxt();
+        //global.saveNodesToFileBin();
 
 
         /*-------------------->Requesito 15<--------------------*/
@@ -318,5 +319,8 @@ public class Main extends Application {
         System.out.println(nodeManager.getNodes().toString());
         nodeManager.readtxtway(".idea/data/output_way_txt");
         System.out.println(nodeManager.getWays().toString());
+        nodeManager.readsubtxt(".idea/data/output_sub_txt",c);
+        //nodeManager.readNodesFromFileBin();
+        //System.out.println(nodeManager.getNodes().toString());
     }
 }

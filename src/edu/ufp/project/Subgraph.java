@@ -24,6 +24,18 @@ public class Subgraph {
     public void setGraph(EdgeWeightedDigraph graph) {
         this.graph = graph;
     }
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+    public void setNodes(ArrayList<Node> nodes) {
+        this.nodes = nodes;
+    }
+    public ArrayList<Way> getWays() {
+        return ways;
+    }
+    public void setWays(ArrayList<Way> ways) {
+        this.ways = ways;
+    }
 
 
     /**

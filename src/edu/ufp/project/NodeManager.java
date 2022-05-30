@@ -255,15 +255,10 @@ public class NodeManager implements Serializable {
      */
     public void saveNodesToFileBin() {
         try {
-            File f = new File("Nodes.bin");
+            File f = new File(".idea/data/output_node_bin");
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            for (Node node : this.nodes) {
-                oos.writeObject(this.nodes.get(node.getId()));
-                oos.writeObject(this.nodes.get(node.getId()).getPoi());
-                oos.writeObject(this.nodes.get(node.getId()).getEtiquetas());
-                oos.writeObject(this.nodes.get(node.getId()).getLocalization());
-            }
+            oos.writeObject(this.nodes);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -274,7 +269,7 @@ public class NodeManager implements Serializable {
      */
     public void readNodesFromFileBin() {
         try {
-            File f = new File("Nodes.bin");
+            File f = new File(".idea/data/output_node_bin");
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Node n = (Node)ois.readObject();
@@ -416,4 +411,124 @@ public class NodeManager implements Serializable {
                 }
             }
         }}
+
+    /**
+     * Metodo para escrever info sobre o subGraph
+     */
+    public void writesubtxt(){
+        Out out=new Out(".idea/data/output_sub_txt");
+        out.println(this.subgraphs.size());
+        for (Subgraph sub:this.subgraphs ){
+            out.println(sub.getNodes().size());
+            for (Node nodes :sub.getNodes()){
+                if(nodes.getEtiquetas()==null){
+                    out.println(nodes.getId()+","+nodes.getPoi().getId()+","+0);
+                }
+                else{
+                    out.println(nodes.getId()+","+nodes.getPoi().getId()+","+nodes.getEtiquetas().size());
+                    for (Etiqueta etiqueta:nodes.getEtiquetas()){
+                        out.print(etiqueta.getKey()+","+etiqueta.getVal()+",");
+                    }
+                    out.println();}
+            }
+            out.println(sub.getWays().size());
+            for (Way ways:sub.getWays()){
+                if(ways.getEtiquetas()==null){
+                    out.println(ways.getId()+","+this.nodes.indexOf(ways.getNode1())+","+this.nodes.indexOf(ways.getNode2())+","+ways.weight()+","+0);
+                }
+                else{
+                    out.println(ways.getId()+","+ways.getNode1().getId()+","+ways.getNode2().getId()+","+ways.weight()+","+ways.getEtiquetas().size());
+                    for (Etiqueta eti:ways.getEtiquetas()){
+                        out.print(eti.getKey()+","+eti.getVal()+",");
+                    }
+                    out.println();
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Metodo para ler info sobre o subGraph em ficheiro txt
+     * @param file -> ficheir a ler
+     * @param c -> cidade que contem o subGraph
+     * @throws GlobalGraphNotCreated -> excecao lancada em caso de nao haver nenhum graph
+     * @throws LocationsNotInitException -> excecao lancada em caso de nao haver localizacoes criadas
+     */
+    public void readsubtxt(String file,City c) throws GlobalGraphNotCreated, LocationsNotInitException {
+        Subgraph sub=new Subgraph();
+        String linha;
+        In in=new In(file);
+        if (!in.exists()) {
+            System.out.println("Failed to read file");
+        } else {
+            while(in.hasNextLine()){
+                linha=in.readLine();
+                int subcount=Integer.parseInt(linha);
+                for (int i=0;i<subcount;i++){
+                    linha=in.readLine();
+                    int nodeCount=Integer.parseInt(linha);
+                    for (int j=0;j<nodeCount;j++){
+                        linha=in.readLine();
+                        String[] node =linha.split(",",3);
+                        int eticount,nodeid,poiid;
+                        nodeid=Integer.parseInt(node[0]);
+                        poiid=Integer.parseInt(node[1]);
+                        eticount=Integer.parseInt(node[2]);
+                        if(eticount==0){
+                            Node newnode =new Node(nodeid,null,c.getPois().get(poiid));
+                            sub.addNode(newnode);
+                        }else{
+                            String key;
+                            String value;
+                            linha=in.readLine();
+                            String[] eti =linha.split(",",eticount);
+                            ArrayList<Etiqueta> etis=new ArrayList<>();
+                            for (int f=0;f<eticount;f=f+2){
+                                key=eti[f];
+                                value=eti[f+1];
+                                Etiqueta et=new Etiqueta(key,value);
+                                etis.add(et);
+                            }
+                            Node newnode =new Node(nodeid,etis,c.getPois().get(poiid));
+                            sub.addNode(newnode);
+
+                        }}
+                    sub.createsubGraph();
+                    linha=in.readLine();
+                    int wayCount=Integer.parseInt(linha);
+                    for ( int a=0;a<wayCount;a++){
+                        linha=in.readLine();
+                        String[] way =linha.split(",",5);
+                        int wayid,nodeind1,nodeind2,eticount;
+                        double peso;
+                        wayid=Integer.parseInt(way[0]);
+                        nodeind1=Integer.parseInt(way[1]);
+                        nodeind2=Integer.parseInt(way[2]);
+                        peso=Double.parseDouble(way[3]);
+                        eticount=Integer.parseInt(way[4]);
+                        if(eticount==0){
+                            Way newway=new Way(wayid,this.nodes.get(nodeind1),this.nodes.get(nodeind2),peso,null);
+                            sub.createEdge(newway);
+                        }
+                        else {
+                            String key;
+                            String value;
+                            linha=in.readLine();
+                            String[] eti =linha.split(",",eticount);
+                            ArrayList<Etiqueta> etis=new ArrayList<>();
+                            for (int j=0;j<eticount;j=j+2){
+                                key=eti[j];
+                                value=eti[j+1];
+                                Etiqueta et=new Etiqueta(key,value);
+                                etis.add(et);
+                            }
+                            Way newway=new Way(wayid,this.nodes.get(nodeind1),this.nodes.get(nodeind2),peso,etis);
+                            sub.createEdge(newway);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
