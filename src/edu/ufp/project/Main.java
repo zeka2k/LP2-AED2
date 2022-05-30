@@ -14,18 +14,20 @@ import java.util.logging.Logger;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();*/
+        Parent root = FXMLLoader.load(getClass().getResource("graphLayout.fxml"));
+        Scene scene = new Scene(root);
 
+        primaryStage.setTitle("Graph Creator");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 
     public static void main(String[] args) throws LocationsNotInitException, GlobalGraphNotCreated {
+        launch(args);
         //launch(args);
         //testCity();
-        test2();
+        //test2();
     }
 
 
